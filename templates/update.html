@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Bioterio</title>
+{% endblock %}
+
+
+{% block body%}
+<div class="jumbotron">
+	<div class="content">
+		<h1>Actualizar {{cruza.caja}}</h1>		
+		<form action="/update/{{cruza.id}}" method="POST">
+			<div class="form-group">
+				<label for="caja">Nombre de la caja</label>
+				<input type="text" class="form-control" name="caja" id="caja" aria-describedby="cajaHelp" placeholder="Ingrese el nombre de la caja aquí" value="{{cruza.caja}}">
+				<small id="cajaHelp" class="form-text text-muted">Ingrese valores como A1, B2, C4</small>
+			</div>
+
+			<div class="form-group">
+				<label for="cepa">Cepa</label>
+				<select class="form-control" name="cepa" id="cepa" aria-describedby="cepaHelp">
+					{%for cepa in cepa_list %}
+					
+						{% if cepa == cruza.cepa %}
+						<option value="{{cepa}}" selected>{{cepa}}</option>
+						{% else %}
+						<option value="{{cepa}}">{{cepa}}</option>
+						{% endif %}
+
+					{% endfor %}
+				</select>
+				<small id="cepaHelp" class="form-text text-muted">Seleccione un valor de la lista</small>
+			</div>
+
+			<div class="form-group">
+				<label for="fecha_cruza">Fecha de cruza</label>
+				<input type="date" class="form-control" name="fecha_cruza" id="fecha_cruza" aria-describedby="fecha_cruzaHelp" value="{{cruza.fecha_cruza.date()}}">
+				<small id="fecha_cruzaHelp" class="form-text text-muted" >Ingrese la fecha en formato mm/dd/yyyy o seleccionela con el control de la derecha</small>
+			</div>
+
+			<div class="form-group">
+				<label for="machos">Número de machos</label>
+				<input type="number" class="form-control" name="machos" id="machos" aria-describedby="machosHelp" min="0" value="{{cruza.machos}}">
+				<small id="machosHelp" class="form-text text-muted">Ingrese de forma manual o con el control de la derecha el número de machos en la cruza</small>
+			</div>
+
+			<div class="form-group">
+				<label for="hembras">Número de hembras</label>
+				<input type="number" class="form-control" name="hembras" id="hembras" aria-describedby="hembrasHelp" min="0" value="{{cruza.hembras}}">
+				<small id="hembrasHelp" class="form-text text-muted">Ingrese de forma manual o con el control de la derecha el número de hembras en la cruza</small>
+			</div>
+			<input class="btn btn-primary mb-2" type="submit" value="Actualizar cruza">
+		</form>
+
+	</div> 
+</div>
+{% endblock %}
+

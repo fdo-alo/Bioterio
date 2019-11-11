@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Bioterio</title>
+{% endblock %}
+
+
+{% block body%}
+<div class="jumbotron">
+	<div class="content">
+		<h1>Actualizar camada {{camada.id}}</h1>		
+		<form action="/update-camada/{{camada.id}}" method="POST">
+			<div class="form-group">
+				<label for="fecha_cruza">Fecha de nacimiento</label>
+				<input type="date" class="form-control" name="fecha_cruza" id="fecha_nacimiento" aria-describedby="fecha_nacimientoHelp" value="{{camada.fecha_nacimiento.date()}}">
+				<small id="fecha_nacimientoHelp" class="form-text text-muted">Ingrese la fecha en formato mm/dd/yyyy o seleccionela con el control de la derecha</small>
+			</div>
+
+			<div class="form-group">
+				<label for="fecha_cruza">Fecha de destete</label>
+				<input type="date" class="form-control" name="fecha_destete" id="fecha_destete" aria-describedby="fecha_desteteHelp" value="{{camada.fecha_destete.date()}}">
+				<small id="fecha_desteteHelp" class="form-text text-muted">Ingrese la fecha en formato mm/dd/yyyy o seleccionela con el control de la derecha</small>
+			</div>
+
+			<div class="form-group">
+				<label for="machos">Número de machos</label>
+				<input type="number" class="form-control" name="machos" id="machos" aria-describedby="machosHelp" min="0" value="{{camada.machos}}">
+				<small id="machosHelp" class="form-text text-muted">Ingrese de forma manual o con el control de la derecha el número de machos en la cruza</small>
+			</div>
+
+			<div class="form-group">
+				<label for="hembras">Número de hembras</label>
+				<input type="number" class="form-control" name="hembras" id="hembras" aria-describedby="hembrasHelp" min="0" value="{{camada.hembras}}">
+				<small id="hembrasHelp" class="form-text text-muted">Ingrese de forma manual o con el control de la derecha el número de hembras en la cruza</small>
+			</div>
+			
+			<input type="submit" value="Actualizar camada">
+		</form>
+
+	</div> 
+</div>
+{% endblock %}
+
