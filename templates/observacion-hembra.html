@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Bioterio - Observaciones hembra {{hembra.caja}}</title>
+{% endblock %}
+
+{% block body%}
+<div class="jumbotron">
+	<div class="content">
+		<h1>Observaciones hembra {{hembra.caja}}</h1>
+
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th>Observación</th>
+					<th>Fecha</th>					
+				</tr>
+			</thead>
+			
+			{%for observacion in hembra.observacion %}
+			<tr>
+				<td>{{ observacion.observacion}}</td>
+				<td>{{ observacion.fecha.date()}}</td>
+				
+				
+			</tr>
+			{% endfor %}		
+		</table>
+
+
+
+		<form action="/observacion-hembra/{{hembra.id}}" method="POST">
+
+			<div class="form-group">
+				<label for="observacion">Nombre de la caja</label>
+				<textarea type="textarea" rows="4" class="form-control" name="observacion" id="observacion" aria-describedby="observacionHelp" placeholder="Ingrese su comentario en esta área"></textarea>
+				<small id="observacionHelp" class="form-text text-muted">Área de texto para agregar su observación</small>
+			</div>
+
+			<input class="btn btn-primary mb-2" type="submit" value="Agregar observación">
+		</form>
+
+	</div> 
+</div>
+{% endblock %}

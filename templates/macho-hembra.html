@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Bioterio</title>
+{% endblock %}
+
+
+{% block body%}
+
+
+<div class="jumbotron">
+	<div class="content">		
+		<hr>
+		<h2>Machos</h2>
+		<hr>
+
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th>Caja</th>
+					<th>Cepa</th>
+					<th>Fecha de nacimiento</th>
+					<th>Fecha de destete</th>
+					<th>Cantidad</th>
+					<th>Padres</th>					
+					<th>Observaciones</th>
+				</tr>
+			</thead>
+			
+			{%for macho in machos %}
+			<tr>
+				<td>{{ macho.caja}}</td>
+				<td>{{ macho.cepa}}</td>
+				<td>{{ macho.fecha_nacimiento.date() }}</td>				
+				<td>{{ macho.fecha_destete.date() }}</td>
+				<td>{{ macho.cantidad }}</td>
+				<td>{{ macho.padres }}</td>
+				<td><a href="/observacion-macho/{{macho.id}}">Ver/Agregar observaciones</a></td>
+			</tr>
+			{% endfor %}		
+		</table>
+
+		<hr>
+		<h2>Hembras</h2>
+		<hr>
+
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th>Caja</th>
+					<th>Cepa</th>
+					<th>Fecha de nacimiento</th>
+					<th>Fecha de destete</th>
+					<th>cantidad</th>
+					<th>Padres</th>
+					<th>Observaciones</th>
+				</tr>
+			</thead>
+			
+			{%for hembra in hembras %}
+			<tr>
+				<td>{{ hembra.caja}}</td>
+				<td>{{ hembra.cepa}}</td>
+				<td>{{ hembra.fecha_nacimiento.date() }}</td>				
+				<td>{{ hembra.fecha_destete.date() }}</td>
+				<td>{{ hembra.cantidad }}</td>
+				<td>{{ hembra.padres }}</td>
+				<td><a href="/observacion-hembra/{{hembra.id}}">Ver/Agregar observaciones</td>
+			</tr>
+			{% endfor %}		
+		</table>
+		<hr>
+
+	</div> 
+</div>
+
+<div class="jumbotron">
+	<div class="embed-responsive embed-responsive-16by9">
+		<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/cYMpDGNqXSM" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+	</div>
+</div>
+{% endblock %}

@@ -17,13 +17,14 @@
 					<th>Fecha de destete</th>					
 					<th># Machos</th>
 					<th># Hembras</th>
+					<th># Crias</th>
 					<th>Acciones</th>
 				</tr>
 			</thead>
 			{%for camada in cruza.camadas %}
 			<tr>
 				<td>{{ camada.fecha_nacimiento.date() }}</td>
-				{% if (camada.fecha_destete < camada.fecha_destete.now()) and (camada.is_created==False)  %}
+				{% if (camada.fecha_destete < camada.fecha_destete.now()) and (camada.macho_is_created==False or camada.hembra_is_created==False)  %}
   					<td style="color:red">{{ camada.fecha_destete.date() }}<br>
 					<small>Revisar si ya fue destetado</small>
   					</td>
@@ -32,12 +33,18 @@
 				{% endif %}
 				<td>{{ camada.machos }}</td>
 				<td>{{ camada.hembras }}</td>
+				<td>{{camada.machos + camada.hembras }}</td>
 				<td>
-					<!--a href="/{{camada.id}}">Crear registro</a--><br>
+					{% if (camada.fecha_destete < camada.fecha_destete.now()) and (camada.macho_is_created==False)  %}					
+						<a href="/macho/{{camada.id}}">Destetar macho</a><br>					
+					{% endif %}
+					{% if (camada.fecha_destete < camada.fecha_destete.now()) and (camada.hembra_is_created==False)  %}					
+						<a href="/hembra/{{camada.id}}">Destetar hembra</a><br>					
+					{% endif %}
 					<a href="/update-camada/{{camada.id}}">Actualizar camada</a><br>
 				</td>
 			</tr>
-			{% endfor %}
+			{% endfor %}		
 		</table>
 
 		<hr>

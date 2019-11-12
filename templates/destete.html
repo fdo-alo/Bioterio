@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Bioterio - Destete</title>
+{% endblock %}
+
+
+{% block body%}
+<div class="jumbotron">
+	<div class="content">		
+		<h2>Visor de destetes</h2>
+
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th>Fecha de nacimiento</th>
+					<th>Fecha de destete</th>					
+					<th># Machos</th>
+					<th># Hembras</th>
+					<th># Crias</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			{%for camada in camadas %}
+			<tr>
+				{% if (camada.fecha_destete < camada.fecha_destete.now()) and (camada.macho_is_created==False or camada.hembra_is_created==False)  %}
+				<td>{{ camada.fecha_nacimiento.date() }}</td>				
+  					<td style="color:red">{{ camada.fecha_destete.date() }}</td>				
+				
+				<td>{{ camada.machos }}</td>
+				<td>{{ camada.hembras }}</td>
+				<td>{{camada.machos + camada.hembras }}</td>
+				<td>
+					{% if (camada.fecha_destete < camada.fecha_destete.now()) and (camada.macho_is_created==False)  %}					
+						<a href="/macho/{{camada.id}}">Destetar macho</a><br>					
+					{% endif %}
+					{% if (camada.fecha_destete < camada.fecha_destete.now()) and (camada.hembra_is_created==False)  %}					
+						<a href="/hembra/{{camada.id}}">Destetar hembra</a><br>					
+					{% endif %}
+					<a href="/update-camada/{{camada.id}}">Actualizar camada</a><br>
+				</td>
+				{% endif %}
+			</tr>
+			{% endfor %}		
+		</table>
+
+		<hr>
+
+	</div> 
+</div>
+
+
+
+{% endblock %}

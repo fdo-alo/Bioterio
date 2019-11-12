@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Bioterio - Error de usuario</title>
+{% endblock %}
+
+
+{% block body%}
+<div class="jumbotron">
+	<div class="content">		
+		<h2>¡Algo salio mal!</h2>		
+		<hr>
+		<img src="{{ url_for('static', filename='images/human-error-and-computers.jpg')}}" class="img-fluid" alt="Error">
+		<hr>
+
+		<h3>Posibles causas</h3>
+		<ul>
+			<li>No se ingresaron los datos correctamente</li>
+			<li>El formato ingresado no fue el adecuado (procurar utilizar el calendario desplegable para evitar errores con las fechas)</li>
+			<li>Falla en el programa (si puede suceder favor de reportarlo para corregirlo)</li>
+		</ul>
+
+		<p>Apretar el botón de atrás en el navegador para revisar y volver a intentar ó</p>
+
+		<a href="/">Regresar al inicio</a>
+
+	</div> 
+</div>
+
+
+
+{% endblock %}
