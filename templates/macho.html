@@ -12,7 +12,7 @@
 
 			<div class="form-group">
 				<label for="caja">Nombre de la caja</label>
-				<input type="text" class="form-control" name="caja" id="caja" aria-describedby="cajaHelp" placeholder="Ingrese el nombre de la caja aquí">
+				<input type="text" class="form-control" name="caja" id="caja" aria-describedby="cajaHelp" placeholder="Ingrese el nombre de la caja aquí" required value="{{caja}}">
 				<small id="cajaHelp" class="form-text text-muted">Ingrese valores como A1, B2, C4</small>
 			</div>
 
@@ -29,7 +29,7 @@
 
 			<div class="form-group">
 				<label for="fecha_destete">Fecha de destete</label>
-				<input type="date" class="form-control" name="fecha_destete" id="fecha_destete" aria-describedby="fecha_desteteHelp" value="{{camada.fecha_destete.date()}}">
+				<input type="date" class="form-control" name="fecha_destete" id="fecha_destete" aria-describedby="fecha_desteteHelp" value="{{camada.fecha_destete.date()}}" required>
 				<small id="fecha_desteteHelp" class="form-text text-muted" >Ingrese la fecha en formato mm/dd/yyyy o seleccionela con el control de la derecha</small>
 			</div>
 			

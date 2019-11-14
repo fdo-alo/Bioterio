@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head%}
+<title>Bioterio - Error de usuario</title>
+{% endblock %}
+
+{% block body%}
+<div class="jumbotron">
+	<div class="content">		
+		<h2>¡Algo salio mal!</h2>		
+		<hr>
+		<img src="{{ url_for('static', filename='images/human-error-and-computers.jpg')}}" class="img-fluid" alt="Error">
+		<hr>
+
+		<h3>{{ error }}</h3>
+
+		<p>Apretar el botón de atrás en el navegador para revisar y volver a intentar ó</p>
+
+		<a href="/">Regresar al inicio</a>
+
+	</div> 
+</div>
+
+
+
+{% endblock %}
