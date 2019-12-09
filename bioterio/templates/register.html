@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body %}
+
+{% if current_user.is_authenticated or empty_list %}
+<form method="POST">
+    {# This hidden_tag is a CSRF security feature. #}
+    {{ form.hidden_tag() }}
+    {{ form.email.label }} {{ form.email() }}<br>
+    {{ form.password.label }} {{ form.password() }}<br>
+    {{ form.pass_confirm.label }} {{ form.pass_confirm() }}<br>
+    {{ form.submit() }}
+</form>
+{% else %}
+<a href="{{url_for('login')}}">Necesita estar firmado para registrar nuevos usuarios presione aquí para firmarse.</a>
+{% endif %}
+
+{% endblock %}

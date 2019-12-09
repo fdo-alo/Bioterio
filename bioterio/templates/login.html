@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block body %}
+
+<h1>Inserte su correo y su constraseña</h1>
+
+<form method="POST">
+    {# This hidden_tag is a CSRF security feature. #}
+    {{ form.hidden_tag() }}
+    {{ form.email.label }} {{ form.email() }}
+    {{ form.password.label }} {{ form.password() }}
+    {{ form.submit() }}
+</form>
+{% endblock %}

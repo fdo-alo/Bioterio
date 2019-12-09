@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head%}
-<title>Bioterio - Cruzas</title>
+Bioterio - Cruzas
 {% endblock %}
 
 {% block body%}
@@ -14,8 +14,8 @@
 				<tr>
 					<th>Caja</th>
 					<th>Cepa</th>
-					<th>Fecha de cruza</th>					
-					<th># Machos</th>					
+					<th>Fecha de cruza</th>
+					<th># Machos</th>
 					<th># Hembras</th>
 					<th># de camadas</th>
 					<th>Acciones</th>
@@ -25,7 +25,7 @@
 			<tr>
 				<td>{{ cruza.caja }}</td>
 				<td>{{ cruza.cepa }}</td>
-				<td>{{ cruza.fecha_cruza.date() }}</td>				
+				<td>{{ cruza.fecha_cruza.date() }}</td>
 				<td>{{ cruza.machos }}</td>
 				<td>{{ cruza.hembras }}</td>
 				<td>{{ cruza.camadas|length }}</td>
@@ -39,7 +39,7 @@
 
 		<hr>
 
-		<form action="/" method="POST">
+		<form method="POST">
 
 			<div class="form-group">
 				<label for="caja">Nombre de la caja</label>
@@ -74,13 +74,13 @@
 				<input type="number" class="form-control" name="hembras" id="hembras" aria-describedby="hembrasHelp" min="0" value="0" required>
 				<small id="hembrasHelp" class="form-text text-muted">Ingrese de forma manual o con el control de la derecha el número de hembras en la cruza</small>
 			</div>
-			
+
 			<input type="submit" value="Agregar una cruza">
 		</form>
 
 		<hr>
 
-	</div> 
+	</div>
 </div>
 
 

@@ -10,19 +10,57 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
+
+    {% if current_user.is_authenticated %}
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('cruza')}}">Cruza</a>
+      </li>
+    </ul>
     <ul class="navbar-nav">      
       <li class="nav-item">
-        <a class="nav-link" href="/macho-hembra/">Experimentales</a>
+        <a class="nav-link" href="{{url_for('macho_hembra_get')}}">Experimentales</a>
       </li>      
     </ul>
     <ul class="navbar-nav">      
       <li class="nav-item">
-        <a class="nav-link" href="/destete/">Destetes pendientes</a>
+        <a class="nav-link" href="{{url_for('destete')}}">Destetes pendientes</a>
       </li>      
     </ul>
+   <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('register')}}">Registrarse</a>
+      </li>
+    </ul>
+     <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+      </li>
+    </ul>
+      <ul class="navbar-nav">
+      <li class="nav-item">
+          <a class="nav-link" href="#">"Hola {{current_user.email }}"</a>
+      </li>
+    </ul>
+{% else %}
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('login')}}">Login</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('register')}}">Registrarse</a>
+      </li>
+    </ul>
+ {% endif %}
+
+
   </div>
 </nav>
-	{% block head%}{% endblock %}
+    <title>
+	    {% block head%}{% endblock %}
+    </title>
 </head>
 <body>
 	
