@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash, abort
-from datetime import datetime
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from bioterio import app, db
 from bioterio.models import Cruza, Camada, Macho, Hembra, Observacion, User
@@ -29,7 +29,7 @@ def cruza():
             try:
                 db.session.add(new_cruza)
                 db.session.commit()
-                return redirect(url_for('index'))
+                return redirect(url_for('cruza'))
             except:
                 return redirect(url_for('user_error'))
         else:
@@ -55,7 +55,7 @@ def camada(id):
         try:
             db.session.add(new_camada)
             db.session.commit()
-            return redirect('/camada/{}'.format(id))
+            return redirect(url_for('destete'))
         except:
             return redirect(url_for("user_error"))
     else:
@@ -85,7 +85,7 @@ def macho(id):
                     db.session.commit()
                     camada.macho_is_created = True
                     db.session.commit()
-                    return redirect('/camada/{}'.format(id))
+                    return redirect(url_for('destete'))
                 except Exception as e:
                     return str(e)
             else:
@@ -121,7 +121,7 @@ def hembra(id):
                     db.session.commit()
                     camada.hembra_is_created = True
                     db.session.commit()
-                    return redirect('/camada/{}'.format(id))
+                    return redirect(url_for('destete'))
                 except Exception as e:
                     return str(e)
             else:
@@ -134,12 +134,40 @@ def hembra(id):
         return render_template("hembra.html", cruza=cruza, camada=camada, caja=caja)
 
 
+def calculate_age(born):
+    today = date.today()
+    diferencia = today - born
+
+    return str(round(diferencia.days // 7, 0)) + " semanas y " + str((round(diferencia.days % 7, 0))) + " días"
+
+
 @app.route("/macho-hembra/", methods=['GET'])
 @login_required
 def macho_hembra_get():
-    machos = Macho.query.order_by(Macho.cepa).all()
-    hembras = Hembra.query.order_by(Hembra.cepa).all()
-    return render_template("macho-hembra.html", machos=machos, hembras=hembras)
+    machos_a = Macho.query.filter(Macho.caja.contains('A')).order_by(Macho.fecha_destete).all()
+    hembras_a = Hembra.query.filter(Hembra.caja.contains('A')).order_by(Hembra.fecha_destete).all()
+    machos_b = Macho.query.filter(Macho.caja.contains('B')).order_by(Macho.fecha_destete).all()
+    hembras_b = Hembra.query.filter(Hembra.caja.contains('B')).order_by(Hembra.fecha_destete).all()
+    machos_c = Macho.query.filter(Macho.caja.contains('C')).order_by(Macho.fecha_destete).all()
+    hembras_c = Hembra.query.filter(Hembra.caja.contains('C')).order_by(Hembra.fecha_destete).all()
+
+    total_macho_a = sum([x.cantidad for x in machos_a])
+    total_macho_b = sum([x.cantidad for x in machos_b])
+    total_macho_c = sum([x.cantidad for x in machos_c])
+
+    total_hembra_a = sum([x.cantidad for x in hembras_a])
+    total_hembra_b = sum([x.cantidad for x in hembras_b])
+    total_hembra_c = sum([x.cantidad for x in hembras_c])
+
+    calculate = calculate_age
+
+    return render_template("macho-hembra.html", machos_a=machos_a, total_macho_a=total_macho_a,
+                           hembras_a=hembras_a, total_hembra_a=total_hembra_a,
+                           machos_b=machos_b, total_macho_b=total_macho_b,
+                           hembras_b=hembras_b, total_hembra_b=total_hembra_b,
+                           machos_c=machos_c, total_macho_c=total_macho_c,
+                           hembras_c=hembras_c, total_hembra_c=total_hembra_c,
+                           calculateage=calculate)
 
 
 @app.route("/observacion-macho/<int:id>", methods=['POST', 'GET'])
@@ -154,7 +182,7 @@ def observacion_macho(id):
         try:
             db.session.add(new_observacion)
             db.session.commit()
-            return redirect('/macho-hembra/')
+            return redirect('/observacion-macho/{}'.format(id))
         except:
             return redirect(url_for('user_error'))
     else:
@@ -173,7 +201,7 @@ def observacion_hembra(id):
         try:
             db.session.add(new_observacion)
             db.session.commit()
-            return redirect('/macho-hembra/')
+            return redirect('/observacion-hembra/{}'.format(id))
         except:
             return redirect(url_for('user_error'))
     else:
@@ -193,6 +221,31 @@ def delete(id):
         return redirect(url_for('user_error'))
 
 
+@app.route('/delete-macho/<int:id>')
+@login_required
+def delete_macho(id):
+    macho_to_delete = Macho.query.get_or_404(id)
+    try:
+        db.session.delete(macho_to_delete)
+        db.session.commit()
+        return redirect(url_for('macho_hembra_get'))
+    except:
+        return redirect(url_for('user_error'))
+
+
+@app.route('/delete-hembra/<int:id>')
+@login_required
+def delete_hembra(id):
+    hembra_to_delete = Hembra.query.get_or_404(id)
+
+    try:
+        db.session.delete(hembra_to_delete)
+        db.session.commit()
+        return redirect(url_for('macho_hembra_get'))
+    except:
+        return redirect(url_for('user_error'))
+
+
 @app.route('/update/<int:id>', methods=['POST', 'GET'])
 @login_required
 def update(id):
@@ -207,7 +260,7 @@ def update(id):
 
         try:
             db.session.commit()
-            return redirect(url_for('index'))
+            return redirect(url_for('cruza'))
         except:
             return redirect(url_for('user_error'))
 
@@ -221,11 +274,17 @@ def user_error():
     return render_template('user-error.html')
 
 
+def find_cruza(query):
+    cruza = Cruza.query.filter_by(id=query).first()
+    return cruza.cepa
+
+
 @app.route("/destete", methods=['GET'])
 @login_required
 def destete():
     camadas = Camada.query.order_by(Camada.fecha_destete.desc()).all()
-    return render_template("destete.html", camadas=camadas)
+    cepa = find_cruza
+    return render_template("destete.html", camadas=camadas, cepa=cepa)
 
 
 @app.route('/update-camada/<int:id>', methods=['POST', 'GET'])

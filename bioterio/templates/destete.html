@@ -13,6 +13,7 @@ Bioterio - Destete
 		<table class="table">
 			<thead class="thead-dark">
 				<tr>
+					<th>Cepa</th>
 					<th>Fecha de nacimiento</th>
 					<th>Fecha de destete</th>					
 					<th># Machos</th>
@@ -24,6 +25,7 @@ Bioterio - Destete
 			{%for camada in camadas %}
 			<tr>
 				{% if (camada.fecha_destete < camada.fecha_destete.now()) and (camada.macho_is_created==False or camada.hembra_is_created==False)  %}
+				<td>{{cepa(camada.cruza_id)}}</td>
 				<td>{{ camada.fecha_nacimiento.date() }}</td>				
   					<td style="color:red">{{ camada.fecha_destete.date() }}</td>				
 				
@@ -32,12 +34,12 @@ Bioterio - Destete
 				<td>{{camada.machos + camada.hembras }}</td>
 				<td>
 					{% if (camada.fecha_destete < camada.fecha_destete.now()) and (camada.macho_is_created==False)  %}					
-						<a href="/macho/{{camada.id}}">Destetar macho</a><br>					
+						<a class="btn btn-outline-primary" href="/macho/{{camada.id}}">Destetar macho</a><br>
 					{% endif %}
 					{% if (camada.fecha_destete < camada.fecha_destete.now()) and (camada.hembra_is_created==False)  %}					
-						<a href="/hembra/{{camada.id}}">Destetar hembra</a><br>					
+						<a class="btn btn-outline-success" href="/hembra/{{camada.id}}">Destetar hembra</a><br>
 					{% endif %}
-					<a href="/update-camada/{{camada.id}}">Actualizar camada</a><br>
+					<a class="btn btn-primary" href="/update-camada/{{camada.id}}">Actualizar camada</a><br>
 				</td>
 				{% endif %}
 			</tr>

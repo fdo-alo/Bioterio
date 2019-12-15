@@ -7,13 +7,17 @@ Bioterio
 {% block body%}
 <div class="jumbotron">
 
+	<h1 class="text-center">BIOTERIO</h1>
+	<h3 class="text-center">Hospital Infantil de México Federico Gómez</h3>
+	<hr>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-4">
-				<img class="mx-auto d-block" src="{{ url_for('static', filename='images/hospital.jpg')}}">
-			</div>
-		</div>
-	</div>
+	<div class="container-fluid px-0">
+  <div class="row">
+    <div class="col-md-12">
+      <img src="{{ url_for('static', filename='images/hospital.jpg')}}" width="100%" class="img-responsive" />
+    </div>
+   </div>
 </div>
+
+<hr>
 {% endblock %}

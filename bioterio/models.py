@@ -85,7 +85,7 @@ class Macho(db.Model):
     cantidad = db.Column(db.Integer, default=0, nullable=False)
     padres = db.Column(db.String(20), nullable=False)
     cruza_id = db.Column(db.Integer, db.ForeignKey('cruza.id'), nullable=False)
-    observacion = db.relationship('Observacion', backref='macho', lazy=True)
+    observacion = db.relationship('Observacion', cascade="all", backref='macho', lazy=True)
 
     def __repr__(self):
         return '<Macho %r>' % self.id
@@ -104,7 +104,7 @@ class Hembra(db.Model):
     cantidad = db.Column(db.Integer, default=0, nullable=False)
     padres = db.Column(db.String(20), nullable=False)
     cruza_id = db.Column(db.Integer, db.ForeignKey('cruza.id'), nullable=False)
-    observacion = db.relationship('Observacion', backref='hembra', lazy=True)
+    observacion = db.relationship('Observacion', cascade="all", backref='hembra', lazy=True)
 
     def __repr__(self):
         return '<Hembra %r>' % self.id
@@ -117,7 +117,7 @@ class Observacion(db.Model):
     db.Model.metadata.reflect(db.engine)
     id = db.Column(db.Integer, primary_key=True)
     observacion = db.Column(db.Text, nullable=False)
-    fecha = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    fecha = db.Column(db.DateTime, default=datetime.now, nullable=False)
     macho_id = db.Column(db.Integer, db.ForeignKey('macho.id'))
     hembra_id = db.Column(db.Integer, db.ForeignKey('hembra.id'))
 

@@ -30,8 +30,8 @@ Bioterio - Cruzas
 				<td>{{ cruza.hembras }}</td>
 				<td>{{ cruza.camadas|length }}</td>
 				<td>
-					<a href="/camada/{{cruza.id}}">Ver/Agregar camada</a><br>
-					<a href="/update/{{cruza.id}}">Actualizar</a>
+					<a class="btn btn-success" href="/camada/{{cruza.id}}">Ver/Agregar camada</a><br>
+					<a class="btn btn-primary" href="/update/{{cruza.id}}">Actualizar</a>
 				</td>
 			</tr>
 			{% endfor %}
@@ -75,7 +75,7 @@ Bioterio - Cruzas
 				<small id="hembrasHelp" class="form-text text-muted">Ingrese de forma manual o con el control de la derecha el número de hembras en la cruza</small>
 			</div>
 
-			<input type="submit" value="Agregar una cruza">
+			<input class="btn btn-success" type="submit" value="Agregar una cruza">
 		</form>
 
 		<hr>
